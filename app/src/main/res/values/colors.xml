@@ -6,4 +6,5 @@
     <color name="colorToolbarText">#000000</color>
     <color name="colorAppbarDivider">#E0E0E0</color>
     <color name="colorActivityBackground">#FFFFFF</color>
+    <color name="colorLink">#FFDD995C</color>
 </resources>
