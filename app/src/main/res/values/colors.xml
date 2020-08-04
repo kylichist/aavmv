@@ -2,9 +2,10 @@
 <resources>
     <color name="colorPrimary">#FFFFFF</color>
     <color name="colorPrimaryDark">#FFFFFF</color>
-    <color name="colorAccent">#FFDD995C</color>
+    <color name="colorAccent">#DD995C</color>
     <color name="colorToolbarText">#000000</color>
     <color name="colorAppbarDivider">#E0E0E0</color>
     <color name="colorActivityBackground">#FFFFFF</color>
-    <color name="colorLink">#FFDD995C</color>
+    <color name="colorLink">#DD995C</color>
+    <color name="colorTokenEditBackground">#D7D7D7</color>
 </resources>

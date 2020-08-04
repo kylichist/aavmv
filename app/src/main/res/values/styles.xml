@@ -9,7 +9,7 @@
         <item name="android:textColorPrimary">@color/colorToolbarText</item>
     </style>
     <style name="Toolbar.TitleText" parent="TextAppearance.Widget.AppCompat.Toolbar.Title">
-        <item name="fontFamily">@font/manrope</item>
+        <item name="fontFamily">@font/manropesemibold</item>
         <item name="android:textSize">26sp</item>
     </style>
 </resources>
