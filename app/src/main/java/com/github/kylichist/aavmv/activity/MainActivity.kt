@@ -8,7 +8,9 @@ import android.text.Annotation
 import android.text.method.LinkMovementMethod
 import android.text.style.ClickableSpan
 import android.text.style.ForegroundColorSpan
+import android.util.Log
 import android.view.View
+import android.widget.Button
 import android.widget.EditText
 import android.widget.LinearLayout
 import android.widget.TextView
@@ -30,6 +32,7 @@ class MainActivity : AppCompatActivity() {
             elevation = 0f
             outlineProvider = null
         }
+
         val sharedPreferences = EncryptedSharedPreferences.create(
             this,
             SHARED_PREFERENCES_NAME,
@@ -53,8 +56,24 @@ class MainActivity : AppCompatActivity() {
         val line: LinearLayout = findViewById(R.id.line)
         line.bind()
 
-        val tokenEditLinear: LinearLayout = findViewById(R.id.token_edit_background)
-        tokenEditLinear.bindWithColor(R.color.colorTokenEditBackground)
+        val tokenEditText: EditText = findViewById(R.id.token_url)
+        val tokenConfirm: Button = findViewById(R.id.confirm)
+        tokenConfirm.setOnClickListener {
+            val link = tokenEditText.text.toString()
+            if (link.isNotEmpty()) {
+                if (link.isValid()) {
+                    if (link.contains("token=") && link.contains("user_id=")) {
+                        val token =
+                            link.substring(link.indexOf("token=") + 6, link.indexOf("&expires"))
+                        val id = link.substring(link.indexOf("user_id=") + 8)
+                        TODO()
+                        Log.d("TAG", get(GET_PROFILE_INFO_LINK_START + id + GET_PROFILE_INFO_LINK_END).toString(4))
+                    } else {
+                        //TODO: show dialog on error
+                    }
+                }
+            }
+        }
 
         val addTokenCard: CardView = findViewById(R.id.card_add_token)
         addTokenCard.bind()
@@ -103,18 +122,5 @@ class MainActivity : AppCompatActivity() {
             text = tokenDescriptionSpannable
             movementMethod = LinkMovementMethod.getInstance()
         }
-
-        val tokenEditText: EditText = findViewById(R.id.token_url)
-        tokenEditText.addTextChangedListener(object : TextWatcher {
-            override fun afterTextChanged(s: Editable?) {}
-
-            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
-
-            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                if (isValid(tokenEditText.text.toString())) {
-
-                }
-            }
-        })
     }
 }

@@ -56,13 +56,31 @@
                     android:textColor="#000000"
                     android:textSize="15sp" />
 
-                <LinearLayout
-                    android:id="@+id/token_edit_background"
+                <Button
+                    android:id="@+id/confirm"
+                    style="?android:attr/borderlessButtonStyle"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="16dp"
+                    android:background="@drawable/button_confirm_background_effect"
+                    android:fontFamily="@font/robotomonoregular"
+                    android:padding="16dp"
+                    android:text="@string/token_confirm"
+                    android:textAllCaps="false"
+                    android:textColor="@color/colorTokenConfirmText"
+                    android:textSize="18sp" />
+
+                <LinearLayout
+                    android:id="@+id/token_edit_background"
+                    style="?android:attr/borderlessButtonStyle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:background="@drawable/edit_text_field_effect"
                     android:orientation="vertical"
-                    android:padding="16dp">
+                    android:paddingHorizontal="16dp"
+                    android:paddingTop="14dp"
+                    android:paddingBottom="16dp">
 
                     <LinearLayout
                         android:layout_width="match_parent"
