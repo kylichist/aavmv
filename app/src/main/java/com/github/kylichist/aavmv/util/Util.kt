@@ -2,17 +2,15 @@ package com.github.kylichist.aavmv.util
 
 import android.content.res.Resources
 import android.graphics.drawable.GradientDrawable
+import android.util.Patterns
 import android.util.TypedValue
 import android.view.View
 import androidx.cardview.widget.CardView
 import androidx.core.content.ContextCompat
 import com.github.kylichist.aavmv.R
 import org.json.JSONObject
-import java.io.InputStream
 import java.net.HttpURLConnection
-import java.net.MalformedURLException
 import java.net.URL
-import java.net.URLConnection
 import java.util.*
 
 fun toDP(px: Float) =
@@ -45,12 +43,10 @@ fun get(url: String): JSONObject {
     return JSONObject(out)
 }
 
-fun String.isValid(): Boolean {
-    try {
-        @Suppress("UNUSED_VARIABLE")
-        val check = URL(this)
-    } catch (fail: MalformedURLException) {
-        return false
-    }
-    return true
-}
+fun String.isValid(): Boolean = Patterns.WEB_URL.matcher(this).matches()
+
+fun String.startIndex(from: String) = this.indexOf(from) + from.length
+fun String.between(from: String, to: String) =
+    this.substring(this.startIndex(from), this.indexOf(to))
+
+fun String.from(from: String) = this.substring(this.startIndex(from))

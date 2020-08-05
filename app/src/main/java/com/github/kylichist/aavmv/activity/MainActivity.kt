@@ -8,12 +8,8 @@ import android.text.Annotation
 import android.text.method.LinkMovementMethod
 import android.text.style.ClickableSpan
 import android.text.style.ForegroundColorSpan
-import android.util.Log
 import android.view.View
-import android.widget.Button
-import android.widget.EditText
-import android.widget.LinearLayout
-import android.widget.TextView
+import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.cardview.widget.CardView
 import androidx.core.content.ContextCompat
@@ -21,12 +17,18 @@ import androidx.security.crypto.EncryptedSharedPreferences
 import androidx.security.crypto.MasterKey
 import com.github.kylichist.aavmv.R
 import com.github.kylichist.aavmv.util.*
+import com.github.kylichist.aavmv.vk.getName
 import com.google.android.material.appbar.AppBarLayout
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
         val appbar: AppBarLayout = findViewById(R.id.appbar)
         appbar.apply {
             elevation = 0f
@@ -59,19 +61,24 @@ class MainActivity : AppCompatActivity() {
         val tokenEditText: EditText = findViewById(R.id.token_url)
         val tokenConfirm: Button = findViewById(R.id.confirm)
         tokenConfirm.setOnClickListener {
-            val link = tokenEditText.text.toString()
-            if (link.isNotEmpty()) {
-                if (link.isValid()) {
-                    if (link.contains("token=") && link.contains("user_id=")) {
-                        val token =
-                            link.substring(link.indexOf("token=") + 6, link.indexOf("&expires"))
-                        val id = link.substring(link.indexOf("user_id=") + 8)
-                        TODO()
-                        Log.d("TAG", get(GET_PROFILE_INFO_LINK_START + id + GET_PROFILE_INFO_LINK_END).toString(4))
-                    } else {
-                        //TODO: show dialog on error
+            val link = tokenEditText.text
+                .toString()
+            if (link.isValid()
+                && link.contains("https://oauth.vk.com/blank.html#access_token=")
+            ) {
+                val id = link.from("user_id=")
+                val userToken = link.between("token=", "&expires")
+                GlobalScope.launch(Dispatchers.IO) {
+                    val name = getName(id, userToken)
+                    sharedPreferences.edit()
+                        .putString("token", userToken)
+                        .apply()
+                    withContext(Dispatchers.Main) {
+                        //TODO: show welcome dialog
                     }
                 }
+            } else {
+                //TODO: show dialog on error
             }
         }
 
@@ -95,7 +102,7 @@ class MainActivity : AppCompatActivity() {
             override fun onClick(widget: View) {
                 Intent().apply {
                     action = Intent.ACTION_VIEW
-                    data = Uri.parse(GET_TOKEN_LINK_DEBUG)
+                    data = Uri.parse(GET_TOKEN_LINK_DEBUG + VERSION)
                 }.also { startActivity(it) }
             }
         }
@@ -123,4 +130,8 @@ class MainActivity : AppCompatActivity() {
             movementMethod = LinkMovementMethod.getInstance()
         }
     }
+
+    private fun loadTokenInputState() {}
+
+    private fun loadDefaultState() {}
 }

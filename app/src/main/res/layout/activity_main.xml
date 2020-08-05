@@ -62,7 +62,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="16dp"
-                    android:background="@drawable/button_confirm_background_effect"
+                    android:background="@drawable/button_background_effect"
                     android:fontFamily="@font/robotomonoregular"
                     android:padding="16dp"
                     android:text="@string/token_confirm"
@@ -121,7 +121,6 @@
                         android:background="@null"
                         android:focusable="true"
                         android:focusableInTouchMode="true"
-
                         android:fontFamily="@font/robotomonoregular"
                         android:hint="@string/token_edit_hint"
                         android:inputType="textUri|textMultiLine" />
