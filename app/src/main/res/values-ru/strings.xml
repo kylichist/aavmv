@@ -2,6 +2,9 @@
 <resources>
     <string name="token_title">Токен</string>
     <string name="token_confirm">Подтвердить</string>
+    <string name="dialog_ok">Хорошо</string>
+    <string name="logged_as">Вы вошли как</string>
+    <string name="error">Произошла ошибка!</string>
     <string name="token_edit_hint">Вставьте ссылку, на которую вы были перенаправлены</string>
     <string name="token_description">Токен - это специальный ключ, содержащий цифры и латинские символы и используемый Вконтакте для идентификации пользователя.\nЭтому приложению требуется токен ВКонтакте для корректной работы.\nПолучить токен можно по <annotation type="link">ссылке</annotation>.</string>
 </resources>

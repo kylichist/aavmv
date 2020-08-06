@@ -60,6 +60,7 @@ class MainActivity : AppCompatActivity() {
 
         val tokenEditText: EditText = findViewById(R.id.token_url)
         val tokenConfirm: Button = findViewById(R.id.confirm)
+
         tokenConfirm.setOnClickListener {
             val link = tokenEditText.text
                 .toString()
@@ -74,11 +75,20 @@ class MainActivity : AppCompatActivity() {
                         .putString("token", userToken)
                         .apply()
                     withContext(Dispatchers.Main) {
-                        //TODO: show welcome dialog
+                        showDialog(
+                            this@MainActivity,
+                            getString(R.string.logged_as),
+                            name
+                        ) {
+                            //TODO: change to def layout
+                        }
                     }
                 }
             } else {
-                //TODO: show dialog on error
+                showDialog(
+                    context = this,
+                    also = getString(R.string.error)
+                )
             }
         }
 
