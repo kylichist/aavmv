@@ -50,20 +50,20 @@ class MainActivity : AppCompatActivity() {
         )
         val token = sharedPreferences.getString("token", "no")
         if (token == "no") {
-
+            //TODO
         }
 
-        val circle1: LinearLayout = findViewById(R.id.circle1)
+        val circle1: LinearLayout = findViewById(R.id.state_input_circle1)
         circle1.bind()
 
-        val circle2: LinearLayout = findViewById(R.id.circle2)
+        val circle2: LinearLayout = findViewById(R.id.state_input_circle2)
         circle2.bind()
 
-        val line: LinearLayout = findViewById(R.id.line)
+        val line: LinearLayout = findViewById(R.id.state_input_line)
         line.bind()
 
-        val tokenEditText: EditText = findViewById(R.id.token_url)
-        val tokenConfirm: Button = findViewById(R.id.confirm)
+        val tokenEditText: EditText = findViewById(R.id.state_input_token_url)
+        val tokenConfirm: Button = findViewById(R.id.state_input_confirm)
 
         tokenConfirm.setOnClickListener {
             with(tokenEditText.text.toString()) {
@@ -91,10 +91,10 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
-        val addTokenCard: CardView = findViewById(R.id.card_add_token)
+        val addTokenCard: CardView = findViewById(R.id.state_input_card_add_token)
         addTokenCard.bind()
 
-        val tokenDescriptionTextView: TextView = findViewById(R.id.token_description)
+        val tokenDescriptionTextView: TextView = findViewById(R.id.state_input_token_description)
         val tokenDescriptionText = getText(R.string.token_description) as SpannedString
         val tokenDescriptionSpannable = SpannableString(tokenDescriptionText)
         val annotations = tokenDescriptionText.getSpans(
