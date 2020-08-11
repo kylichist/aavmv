@@ -150,15 +150,14 @@ class MainActivity : AppCompatActivity() {
         id: String,
         userToken: String,
         onFail: () -> Unit,
-        onSuccess: (response: Any?) -> Unit
-    ) {
-        GlobalScope.launch(Main) {
-            when (val name = withContext(IO) { getName(id, userToken) }) {
-                is Fail -> onFail()
-                is Successful<*> -> onSuccess(name.response)
-            }
+        onSuccess: (response: Any?) -> Unit = {}
+    ) = GlobalScope.launch(Main) {
+        when (val name = withContext(IO) { getName(id, userToken) }) {
+            is Fail -> onFail()
+            is Successful<*> -> onSuccess(name.response)
         }
     }
+
 
     private fun showErrorDialog() = showDialog(
         context = this,
