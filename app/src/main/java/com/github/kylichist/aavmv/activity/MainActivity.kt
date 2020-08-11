@@ -19,10 +19,9 @@ import com.github.kylichist.aavmv.R
 import com.github.kylichist.aavmv.util.*
 import com.github.kylichist.aavmv.vk.getName
 import com.google.android.material.appbar.AppBarLayout
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
+import kotlinx.coroutines.*
+import kotlinx.coroutines.Dispatchers.IO
+import kotlinx.coroutines.Dispatchers.Main
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -69,19 +68,17 @@ class MainActivity : AppCompatActivity() {
             ) {
                 val id = link.from("user_id=")
                 val userToken = link.between("token=", "&expires")
-                GlobalScope.launch(Dispatchers.IO) {
-                    val name = getName(id, userToken)
+                GlobalScope.launch(Main) {
+                    val name = GlobalScope.async(IO) { getName(id, userToken) }
                     sharedPreferences.edit()
                         .putString("token", userToken)
                         .apply()
-                    withContext(Dispatchers.Main) {
-                        showDialog(
-                            this@MainActivity,
-                            getString(R.string.logged_as),
-                            name
-                        ) {
-                            //TODO: change to def layout
-                        }
+                    showDialog(
+                        this@MainActivity,
+                        getString(R.string.logged_as),
+                        name.await()
+                    ) {
+                        //change to def layout
                     }
                 }
             } else {
