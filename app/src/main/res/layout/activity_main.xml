@@ -30,7 +30,7 @@
     </com.google.android.material.appbar.AppBarLayout>
 
     <ViewAnimator
-        android:id="@+id/states_changer"
+        android:id="@+id/state_switcher"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">

@@ -9,10 +9,7 @@ import android.text.method.LinkMovementMethod
 import android.text.style.ClickableSpan
 import android.text.style.ForegroundColorSpan
 import android.view.View
-import android.widget.Button
-import android.widget.EditText
-import android.widget.LinearLayout
-import android.widget.TextView
+import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.cardview.widget.CardView
 import androidx.core.content.ContextCompat
@@ -48,11 +45,18 @@ class MainActivity : AppCompatActivity() {
             EncryptedSharedPreferences.PrefKeyEncryptionScheme.AES256_SIV,
             EncryptedSharedPreferences.PrefValueEncryptionScheme.AES256_GCM
         )
-        val token = sharedPreferences.getString("token", "no")
-        if (token == "no") {
-            //TODO
+        val stateSwitcher: ViewAnimator = findViewById(R.id.state_switcher)
+        with(sharedPreferences) {
+            val id = getString("id", "")!!
+            val userToken = getString("token", "no")!!
+            if (userToken != "no") {
+                checkAndGetName(id, userToken, onFail = {
+                    //TODO: show token input state
+                }, onSuccess = {
+                    //TODO: pass, maybe show name
+                })
+            }
         }
-
         val circle1: LinearLayout = findViewById(R.id.state_input_circle1)
         circle1.bind()
 
@@ -72,28 +76,28 @@ class MainActivity : AppCompatActivity() {
                 ) {
                     val id = from("user_id=")
                     val userToken = between("token=", "&expires")
-                    GlobalScope.launch(Main) {
-                        val name = withContext(IO) { getName(id, userToken) }
-                        sharedPreferences.edit()
-                            .putString("token", userToken)
-                            .apply()
-                        if (name !== null)
-                            showDialog(
-                                this@MainActivity,
-                                getString(R.string.logged_as),
-                                name
-                            ) {
-                                //change to def layout
-                            }
-                        else showErrorDialog()
-                    }
+                    checkAndGetName(id, userToken, onFail = {
+                        showErrorDialog()
+                    }, onSuccess = {
+                        showDialog(
+                            this@MainActivity,
+                            getString(R.string.logged_as),
+                            it.toString()
+                        ) {
+                            //TODO: switch state to default
+                        }
+                        sharedPreferences.edit().apply {
+                            putString("token", userToken)
+                            putString("id", id)
+                            apply()
+                        }
+                    })
                 } else showErrorDialog()
             }
         }
 
         val addTokenCard: CardView = findViewById(R.id.state_input_card_add_token)
         addTokenCard.bind()
-
         val tokenDescriptionTextView: TextView = findViewById(R.id.state_input_token_description)
         val tokenDescriptionText = getText(R.string.token_description) as SpannedString
         val tokenDescriptionSpannable = SpannableString(tokenDescriptionText)
@@ -142,9 +146,19 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun loadTokenInputState() {}
-
-    private fun loadDefaultState() {}
+    private fun checkAndGetName(
+        id: String,
+        userToken: String,
+        onFail: () -> Unit,
+        onSuccess: (response: Any?) -> Unit
+    ) {
+        GlobalScope.launch(Main) {
+            when (val name = withContext(IO) { getName(id, userToken) }) {
+                is Fail -> onFail()
+                is Successful<*> -> onSuccess(name.response)
+            }
+        }
+    }
 
     private fun showErrorDialog() = showDialog(
         context = this,
