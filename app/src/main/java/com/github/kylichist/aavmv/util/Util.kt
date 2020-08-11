@@ -75,19 +75,21 @@ fun get(url: String): JSONObject {
         doOutput = true
         connect()
     }
-    val scanner = Scanner(connection.inputStream)
     var out = ""
-    while (scanner.hasNextLine()) out += scanner.nextLine()
+    with(Scanner(connection.inputStream)) { while (hasNextLine()) out += nextLine() }
     return JSONObject(out)
 }
 
-fun formVkRequestLink(base: String, userToken: String): String = base + ACCESS_TOKEN + userToken + VERSION
-fun formGetUserLink(id: String, userToken: String) = formVkRequestLink(GET_PROFILE_INFO_LINK + id, userToken)
+fun formVkRequestLink(base: String, userToken: String): String =
+    base + ACCESS_TOKEN + userToken + VERSION
+
+fun formGetUserLink(id: String, userToken: String) =
+    formVkRequestLink(GET_PROFILE_INFO_LINK + id, userToken)
 
 fun String.isValid(): Boolean = Patterns.WEB_URL.matcher(this).matches()
 
 fun String.startIndex(from: String) = this.indexOf(from) + from.length
 fun String.between(from: String, to: String) =
-    this.substring(this.startIndex(from), this.indexOf(to))
+    with(this) { substring(startIndex(from), indexOf(to)) }
 
-fun String.from(from: String) = this.substring(this.startIndex(from))
+fun String.from(from: String) = with(this) { substring(startIndex(from)) }
