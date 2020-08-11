@@ -18,7 +18,7 @@ import com.github.kylichist.aavmv.R
 import org.json.JSONObject
 import java.net.HttpURLConnection
 import java.net.URL
-import java.util.*
+import java.util.Scanner
 
 fun toDP(px: Float) =
     TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, px, Resources.getSystem().displayMetrics)

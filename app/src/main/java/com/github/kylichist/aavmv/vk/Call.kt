@@ -5,12 +5,14 @@ import com.github.kylichist.aavmv.util.GET_PROFILE_INFO_LINK
 import com.github.kylichist.aavmv.util.VERSION
 import com.github.kylichist.aavmv.util.get
 
-fun getName(id: String, userToken: String): String {
-    val result =
-        get(GET_PROFILE_INFO_LINK + id + VERSION + ACCESS_TOKEN + userToken)
-            .getJSONArray("response")
-            .getJSONObject(0)
-    with(result) {
-        return "${getString("first_name")} ${getString("last_name")}"
+fun getName(id: String, userToken: String): String? =
+    with(get(GET_PROFILE_INFO_LINK + id + VERSION + ACCESS_TOKEN + userToken)) {
+        if (has("response"))
+            with(
+                getJSONArray("response")
+                    .getJSONObject(0)
+            ) {
+                return "${getString("first_name")} ${getString("last_name")}"
+            }
+        else return null
     }
-}

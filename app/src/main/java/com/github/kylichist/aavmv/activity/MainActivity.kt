@@ -9,7 +9,10 @@ import android.text.method.LinkMovementMethod
 import android.text.style.ClickableSpan
 import android.text.style.ForegroundColorSpan
 import android.view.View
-import android.widget.*
+import android.widget.Button
+import android.widget.EditText
+import android.widget.LinearLayout
+import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.cardview.widget.CardView
 import androidx.core.content.ContextCompat
@@ -19,9 +22,11 @@ import com.github.kylichist.aavmv.R
 import com.github.kylichist.aavmv.util.*
 import com.github.kylichist.aavmv.vk.getName
 import com.google.android.material.appbar.AppBarLayout
-import kotlinx.coroutines.*
 import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.Dispatchers.Main
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -61,31 +66,28 @@ class MainActivity : AppCompatActivity() {
         val tokenConfirm: Button = findViewById(R.id.confirm)
 
         tokenConfirm.setOnClickListener {
-            val link = tokenEditText.text
-                .toString()
-            if (link.isValid()
-                && link.contains("https://oauth.vk.com/blank.html#access_token=")
-            ) {
-                val id = link.from("user_id=")
-                val userToken = link.between("token=", "&expires")
-                GlobalScope.launch(Main) {
-                    val name = GlobalScope.async(IO) { getName(id, userToken) }
-                    sharedPreferences.edit()
-                        .putString("token", userToken)
-                        .apply()
-                    showDialog(
-                        this@MainActivity,
-                        getString(R.string.logged_as),
-                        name.await()
-                    ) {
-                        //change to def layout
+            with(tokenEditText.text.toString()) {
+                if (isValid() &&
+                    contains("https://oauth.vk.com/blank.html#access_token=")
+                ) {
+                    val id = from("user_id=")
+                    val userToken = between("token=", "&expires")
+                    GlobalScope.launch(Main) {
+                        val name = withContext(IO) { getName(id, userToken) }
+                        sharedPreferences.edit()
+                            .putString("token", userToken)
+                            .apply()
+                        if (name !== null)
+                            showDialog(
+                                this@MainActivity,
+                                getString(R.string.logged_as),
+                                name
+                            ) {
+                                //change to def layout
+                            }
+                        else showErrorDialog()
                     }
-                }
-            } else {
-                showDialog(
-                    context = this,
-                    also = getString(R.string.error)
-                )
+                } else showErrorDialog()
             }
         }
 
@@ -116,20 +118,22 @@ class MainActivity : AppCompatActivity() {
         annotations.find { it.value == "link" }
             .also {
                 tokenDescriptionSpannable.apply {
-                    setSpan(
-                        clickableSpan,
-                        tokenDescriptionText.getSpanStart(it),
-                        tokenDescriptionText.getSpanEnd(it),
-                        Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
-                    )
-                    setSpan(
-                        ForegroundColorSpan(
-                            ContextCompat.getColor(this@MainActivity, R.color.colorLink)
-                        ),
-                        tokenDescriptionText.getSpanStart(it),
-                        tokenDescriptionText.getSpanEnd(it),
-                        0
-                    )
+                    with(tokenDescriptionText) {
+                        setSpan(
+                            clickableSpan,
+                            getSpanStart(it),
+                            getSpanEnd(it),
+                            Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
+                        )
+                        setSpan(
+                            ForegroundColorSpan(
+                                ContextCompat.getColor(this@MainActivity, R.color.colorLink)
+                            ),
+                            getSpanStart(it),
+                            getSpanEnd(it),
+                            0
+                        )
+                    }
                 }
             }
         tokenDescriptionTextView.apply {
@@ -141,4 +145,9 @@ class MainActivity : AppCompatActivity() {
     private fun loadTokenInputState() {}
 
     private fun loadDefaultState() {}
+
+    private fun showErrorDialog() = showDialog(
+        context = this,
+        also = getString(R.string.error)
+    )
 }
