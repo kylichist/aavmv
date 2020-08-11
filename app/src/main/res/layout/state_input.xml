@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/card_add_token"
+    android:layout_height="wrap_content"
+    android:layout_marginHorizontal="20dp"
+    android:layout_marginVertical="12dp"
+    android:layout_width="wrap_content">
+
+    <LinearLayout
+        android:layout_height="match_parent"
+        android:layout_width="match_parent"
+        android:orientation="vertical"
+        android:padding="16dp">
+
+        <TextView
+            android:fontFamily="@font/manroperegular"
+            android:gravity="center_horizontal|center_vertical"
+            android:id="@+id/token_description"
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:textColor="#000000"
+            android:textSize="15sp" />
+
+        <Button
+            style="?android:attr/borderlessButtonStyle"
+            android:background="@drawable/button_background_effect"
+            android:fontFamily="@font/robotomonoregular"
+            android:id="@+id/confirm"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:layout_width="match_parent"
+            android:padding="16dp"
+            android:text="@string/token_confirm"
+            android:textAllCaps="false"
+            android:textColor="@color/colorTokenConfirmText"
+            android:textSize="18sp" />
+
+        <LinearLayout
+            style="?android:attr/borderlessButtonStyle"
+            android:background="@drawable/edit_text_field_effect"
+            android:id="@+id/token_edit_background"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_width="match_parent"
+            android:orientation="vertical"
+            android:paddingBottom="16dp"
+            android:paddingHorizontal="16dp"
+            android:paddingTop="14dp">
+
+            <LinearLayout
+                android:baselineAligned="false"
+                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:id="@+id/circle1"
+                    android:layout_height="15dp"
+                    android:layout_weight="0"
+                    android:layout_width="15dp"
+                    android:orientation="vertical" />
+
+                <LinearLayout
+                    android:id="@+id/line"
+                    android:layout_height="15dp"
+                    android:layout_marginEnd="8dp"
+                    android:layout_marginStart="8dp"
+                    android:layout_weight="1"
+                    android:layout_width="match_parent"
+                    android:orientation="vertical" />
+
+                <LinearLayout
+                    android:id="@+id/circle2"
+                    android:layout_height="15dp"
+                    android:layout_weight="0"
+                    android:layout_width="15dp"
+                    android:orientation="vertical" />
+            </LinearLayout>
+
+            <EditText
+                android:autofillHints="url"
+                android:background="@null"
+                android:focusable="true"
+                android:focusableInTouchMode="true"
+                android:fontFamily="@font/robotomonoregular"
+                android:hint="@string/token_edit_hint"
+                android:id="@+id/token_url"
+                android:inputType="textUri|textMultiLine"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:layout_width="match_parent" />
+        </LinearLayout>
+    </LinearLayout>
+</androidx.cardview.widget.CardView>

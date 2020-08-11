@@ -29,103 +29,14 @@
             android:background="@color/colorAppbarDivider" />
     </com.google.android.material.appbar.AppBarLayout>
 
-    <LinearLayout
+    <ViewAnimator
+        android:id="@+id/states_changer"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-        <androidx.cardview.widget.CardView
-            android:id="@+id/card_add_token"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="20dp"
-            android:layout_marginVertical="12dp">
+        <include layout="@layout/state_input" />
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="vertical"
-                android:padding="16dp">
-
-                <TextView
-                    android:id="@+id/token_description"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="@font/manroperegular"
-                    android:gravity="center_horizontal|center_vertical"
-                    android:textColor="#000000"
-                    android:textSize="15sp" />
-
-                <Button
-                    android:id="@+id/confirm"
-                    style="?android:attr/borderlessButtonStyle"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="16dp"
-                    android:background="@drawable/button_background_effect"
-                    android:fontFamily="@font/robotomonoregular"
-                    android:padding="16dp"
-                    android:text="@string/token_confirm"
-                    android:textAllCaps="false"
-                    android:textColor="@color/colorTokenConfirmText"
-                    android:textSize="18sp" />
-
-                <LinearLayout
-                    android:id="@+id/token_edit_background"
-                    style="?android:attr/borderlessButtonStyle"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:background="@drawable/edit_text_field_effect"
-                    android:orientation="vertical"
-                    android:paddingHorizontal="16dp"
-                    android:paddingTop="14dp"
-                    android:paddingBottom="16dp">
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:baselineAligned="false"
-                        android:orientation="horizontal">
-
-                        <LinearLayout
-                            android:id="@+id/circle1"
-                            android:layout_width="15dp"
-                            android:layout_height="15dp"
-                            android:layout_weight="0"
-                            android:orientation="vertical" />
-
-                        <LinearLayout
-                            android:id="@+id/line"
-                            android:layout_width="match_parent"
-                            android:layout_height="15dp"
-                            android:layout_marginStart="8dp"
-                            android:layout_marginEnd="8dp"
-                            android:layout_weight="1"
-                            android:orientation="vertical" />
-
-                        <LinearLayout
-                            android:id="@+id/circle2"
-                            android:layout_width="15dp"
-                            android:layout_height="15dp"
-                            android:layout_weight="0"
-                            android:orientation="vertical" />
-                    </LinearLayout>
-
-                    <EditText
-                        android:id="@+id/token_url"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="8dp"
-                        android:autofillHints="url"
-                        android:background="@null"
-                        android:focusable="true"
-                        android:focusableInTouchMode="true"
-                        android:fontFamily="@font/robotomonoregular"
-                        android:hint="@string/token_edit_hint"
-                        android:inputType="textUri|textMultiLine" />
-                </LinearLayout>
-            </LinearLayout>
-        </androidx.cardview.widget.CardView>
-    </LinearLayout>
+        <include layout="@layout/state_show" />
+    </ViewAnimator>
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
