@@ -15,6 +15,10 @@ import androidx.appcompat.app.AlertDialog
 import androidx.cardview.widget.CardView
 import androidx.core.content.ContextCompat
 import com.github.kylichist.aavmv.R
+import org.json.JSONObject
+import java.net.HttpURLConnection
+import java.net.URL
+import java.util.*
 
 fun toDP(px: Float) =
     TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, px, Resources.getSystem().displayMetrics)
@@ -62,6 +66,19 @@ fun showDialog(context: Context, text: String = "", also: String = "", onCancel:
         window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
         show()
     }
+}
+
+fun get(url: String): JSONObject {
+    val connection = URL(url).openConnection() as HttpURLConnection
+    connection.apply {
+        requestMethod = "GET"
+        doOutput = true
+        connect()
+    }
+    val scanner = Scanner(connection.inputStream)
+    var out = ""
+    while (scanner.hasNextLine()) out += scanner.nextLine()
+    return JSONObject(out)
 }
 
 fun String.isValid(): Boolean = Patterns.WEB_URL.matcher(this).matches()
