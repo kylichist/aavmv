@@ -16,7 +16,7 @@ import com.github.kylichist.aavmv.R
 import org.json.JSONObject
 import java.net.HttpURLConnection
 import java.net.URL
-import java.util.Scanner
+import java.net.URLConnection
 
 fun toDP(px: Float) =
     TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, px, Resources.getSystem().displayMetrics)
@@ -33,7 +33,10 @@ fun textOrGone(textView: TextView, text: String) {
     else textView.visibility = View.GONE
 }
 
-fun showDialog(context: Context, text: String = "", also: String = "", onCancel: () -> Unit = {}) {
+fun showDialog(
+    context: Context, text: String = "",
+    also: String = "", onCancel: () -> Unit = {}
+) {
     val dialogLayout = View.inflate(
         context,
         R.layout.dialog,
@@ -59,17 +62,16 @@ fun showDialog(context: Context, text: String = "", also: String = "", onCancel:
     }
 }
 
-fun get(url: String): JSONObject {
-    val connection = URL(url).openConnection() as HttpURLConnection
-    connection.apply {
-        requestMethod = "GET"
-        doOutput = true
-        connect()
-    }
-    var out = ""
-    with(Scanner(connection.inputStream)) { while (hasNextLine()) out += nextLine() }
-    return JSONObject(out)
-}
+fun get(url: String): JSONObject = URL(url)
+    .openConnection()
+    .asHttpURLConnection()
+    .inputStream
+    .bufferedReader()
+    .readText()
+    .toJSONObject()
+
+fun URLConnection.asHttpURLConnection() = this as HttpURLConnection
+fun String.toJSONObject() = JSONObject(this)
 
 fun formVkRequestLink(base: String, userToken: String): String =
     base + ACCESS_TOKEN + userToken + VERSION
