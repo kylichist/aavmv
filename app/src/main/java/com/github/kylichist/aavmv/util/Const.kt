@@ -7,4 +7,8 @@ const val GET_PROFILE_INFO_LINK = "https://api.vk.com/method/users.get?user_id="
 const val ACCESS_TOKEN = "&access_token="
 const val VERSION = "&v=5.122"
 
+const val TOKEN_LENGTH = 85
+val TOKEN_CHARS = 'a'..'f'
+val TOKEN_NUMBERS = 0..9
+
 const val SHARED_PREFERENCES_NAME = "settings"

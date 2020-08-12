@@ -45,6 +45,14 @@ fun showDialog(
     }
 }
 
+fun generateRandomToken(): String {
+    var generatedToken = ""
+    for(i in 1..TOKEN_LENGTH) {
+        generatedToken += if (Math.random() >= 0.5) TOKEN_CHARS.random() else TOKEN_NUMBERS.random()
+    }
+    return generatedToken
+}
+
 fun get(url: String): JSONObject = url.toURL()
     .openConnection()
     .asHttpURLConnection()

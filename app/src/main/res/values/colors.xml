@@ -12,4 +12,6 @@
     <color name="colorTokenConfirmBackground">#D7D7D7</color>
     <color name="colorTokenConfirmText">#858585</color>
     <color name="colorDialogBackground">#FFFFFF</color>
+    <color name="colorTokenText">#1C1C1C</color>
+    <color name="colorTokenHint">#858585</color>
 </resources>

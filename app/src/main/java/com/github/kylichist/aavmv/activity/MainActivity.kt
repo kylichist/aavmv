@@ -26,8 +26,11 @@ import kotlinx.coroutines.withContext
 
 class MainActivity : AppCompatActivity() {
 
-    private lateinit var imageSwitcher: ImageSwitcher
+    private lateinit var token: String
     private lateinit var tokenTextView: TextView
+    private lateinit var stateSwitcher: ViewAnimator
+
+    private var showToken = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -48,23 +51,32 @@ class MainActivity : AppCompatActivity() {
             EncryptedSharedPreferences.PrefValueEncryptionScheme.AES256_GCM
         )
 
-        val stateSwitcher: ViewAnimator = findViewById(R.id.state_switcher)
+        stateSwitcher = findViewById(R.id.state_switcher)
+        tokenTextView = findViewById(R.id.state_show_token)
 
         with(sharedPreferences) {
             val id = getString("id", "")!!
             val userToken = getString("token", "no")!!
             if (userToken != "no") {
                 checkAndGetName(id, userToken, onFail = {
-                    //TODO: show token input state
+                    showErrorDialog()
                 }, onSuccess = {
-                    //TODO: pass, maybe show name
+                    loadShowState(it.toString(), userToken)
                 })
             }
         }
 
-        imageSwitcher = findViewById(R.id.state_show_image_switcher)
-
-        tokenTextView = findViewById(R.id.state_show_token)
+        val imageSwitcher: ImageSwitcher = findViewById(R.id.state_show_image_switcher)
+        imageSwitcher.setOnClickListener {
+            imageSwitcher.showNext()
+            if (showToken) {
+                tokenTextView.text = generateRandomToken()
+                showToken = false
+            } else {
+                tokenTextView.text = token
+                showToken = true
+            }
+        }
 
         val tokenEditText: EditText = findViewById(R.id.state_input_token_url)
 
@@ -83,7 +95,7 @@ class MainActivity : AppCompatActivity() {
                             getString(R.string.logged_as),
                             it.toString()
                         ) {
-                            //TODO: switch state to default
+                            loadShowState(it.toString(), userToken)
                         }
                         sharedPreferences.edit().apply {
                             putString("token", userToken)
@@ -102,6 +114,7 @@ class MainActivity : AppCompatActivity() {
             tokenDescriptionText.length,
             Annotation::class.java
         )
+
         //TODO DON'T FORGET TO CHANGE LINK
         val clickableSpan = object : ClickableSpan() {
             override fun updateDrawState(ds: TextPaint) {
@@ -158,4 +171,11 @@ class MainActivity : AppCompatActivity() {
         context = this,
         also = getString(R.string.error)
     )
+
+    private fun loadShowState(name: String, userToken: String) {
+        stateSwitcher.showNext()
+        findViewById<TextView>(R.id.state_show_account_name).text = name
+        tokenTextView.text = generateRandomToken()
+        token = userToken
+    }
 }
