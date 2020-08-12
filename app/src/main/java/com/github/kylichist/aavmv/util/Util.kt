@@ -4,7 +4,6 @@ import android.content.Context
 import android.content.res.Resources
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
-import android.graphics.drawable.GradientDrawable
 import android.util.Patterns
 import android.util.TypedValue
 import android.view.View
@@ -13,7 +12,6 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
 import androidx.cardview.widget.CardView
-import androidx.core.content.ContextCompat
 import com.github.kylichist.aavmv.R
 import org.json.JSONObject
 import java.net.HttpURLConnection
@@ -22,13 +20,6 @@ import java.util.Scanner
 
 fun toDP(px: Float) =
     TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, px, Resources.getSystem().displayMetrics)
-
-fun View.bind() {
-    this.background = GradientDrawable().apply {
-        setColor(ContextCompat.getColor(context, R.color.colorAccent))
-        cornerRadius = toDP(15f)
-    }
-}
 
 fun CardView.bind() {
     this.apply {

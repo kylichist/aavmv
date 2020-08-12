@@ -25,7 +25,12 @@ import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
+
 class MainActivity : AppCompatActivity() {
+
+    private lateinit var imageSwitcher: ImageSwitcher
+    private lateinit var tokenTextView: TextView
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -57,14 +62,10 @@ class MainActivity : AppCompatActivity() {
                 })
             }
         }
-        val circle1: LinearLayout = findViewById(R.id.state_input_circle1)
-        circle1.bind()
 
-        val circle2: LinearLayout = findViewById(R.id.state_input_circle2)
-        circle2.bind()
+        imageSwitcher = findViewById(R.id.state_show_image_switcher)
 
-        val line: LinearLayout = findViewById(R.id.state_input_line)
-        line.bind()
+        tokenTextView = findViewById(R.id.state_show_token)
 
         val tokenEditText: EditText = findViewById(R.id.state_input_token_url)
         val tokenConfirm: Button = findViewById(R.id.state_input_confirm)
@@ -146,6 +147,8 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+
+
     private fun checkAndGetName(
         id: String,
         userToken: String,
@@ -157,7 +160,6 @@ class MainActivity : AppCompatActivity() {
             is Successful<*> -> onSuccess(name.response)
         }
     }
-
 
     private fun showErrorDialog() = showDialog(
         context = this,

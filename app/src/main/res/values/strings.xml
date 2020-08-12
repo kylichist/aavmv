@@ -3,6 +3,8 @@
     <string name="token_title">Token</string>
     <string name="token_confirm">Confirm</string>
     <string name="dialog_ok">Done</string>
+    <string name="token_ic_content_description_show">Show token</string>
+    <string name="token_ic_content_description_close">Close token</string>
     <string name="logged_as">You are logged in as</string>
     <string name="error">An error has occurred!</string>
     <string name="token_edit_hint">Paste the link that you were redirected to</string>

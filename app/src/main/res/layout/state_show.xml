@@ -1,6 +1,100 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/state_show_card"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_marginHorizontal="20dp"
+    android:layout_marginVertical="12dp">
 
-</LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:padding="16dp">
+
+        <TextView
+            android:id="@+id/state_show_account_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/manroperegular"
+            android:gravity="center_horizontal|center_vertical"
+            android:textColor="#000000"
+            android:textSize="15sp" />
+
+        <TextView
+            android:id="@+id/state_show_account_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/manropesemibold"
+            android:gravity="center_horizontal|center_vertical"
+            android:textColor="#000000"
+            android:textSize="20sp" />
+
+        <LinearLayout
+            android:id="@+id/state_show_token_show_background"
+            style="?android:attr/borderlessButtonStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/token_text_field_effect"
+            android:orientation="vertical"
+            android:paddingHorizontal="16dp"
+            android:paddingTop="14dp"
+            android:paddingBottom="16dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:baselineAligned="false"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:id="@+id/state_show_circle1"
+                    android:layout_width="15dp"
+                    android:layout_height="15dp"
+                    android:layout_weight="0"
+                    android:background="@drawable/attrs_background"
+                    android:orientation="vertical" />
+
+                <LinearLayout
+                    android:id="@+id/state_show_line"
+                    android:layout_width="match_parent"
+                    android:layout_height="15dp"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginEnd="8dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/attrs_background"
+                    android:orientation="vertical" />
+
+                <ImageSwitcher
+                    android:id="@+id/state_show_image_switcher"
+                    android:layout_width="15dp"
+                    android:layout_height="15dp"
+                    android:layout_weight="0">
+
+                    <ImageView
+                        android:id="@+id/state_show_image_show"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/eye_on"
+                        android:contentDescription="@string/token_ic_content_description_show" />
+
+                    <ImageView
+                        android:id="@+id/state_show_image_close"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/eye_off"
+                        android:contentDescription="@string/token_ic_content_description_close" />
+                </ImageSwitcher>
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/state_show_token"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:background="@null"
+                android:fontFamily="@font/robotomonoregular" />
+        </LinearLayout>
+    </LinearLayout>
+</androidx.cardview.widget.CardView>

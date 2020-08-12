@@ -3,6 +3,8 @@
     <string name="token_title">Токен</string>
     <string name="token_confirm">Подтвердить</string>
     <string name="dialog_ok">Хорошо</string>
+    <string name="token_ic_content_description_show">Показать токен</string>
+    <string name="token_ic_content_description_close">Закрыть токен</string>
     <string name="logged_as">Вы вошли как</string>
     <string name="error">Произошла ошибка!</string>
     <string name="token_edit_hint">Вставьте ссылку, на которую вы были перенаправлены</string>

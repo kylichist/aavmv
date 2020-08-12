@@ -41,7 +41,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
-            android:background="@drawable/edit_text_field_effect"
+            android:background="@drawable/token_text_field_effect"
             android:orientation="vertical"
             android:paddingHorizontal="16dp"
             android:paddingTop="14dp"
@@ -58,6 +58,7 @@
                     android:layout_width="15dp"
                     android:layout_height="15dp"
                     android:layout_weight="0"
+                    android:background="@drawable/attrs_background"
                     android:orientation="vertical" />
 
                 <LinearLayout
@@ -67,6 +68,7 @@
                     android:layout_marginStart="8dp"
                     android:layout_marginEnd="8dp"
                     android:layout_weight="1"
+                    android:background="@drawable/attrs_background"
                     android:orientation="vertical" />
 
                 <LinearLayout
@@ -74,6 +76,7 @@
                     android:layout_width="15dp"
                     android:layout_height="15dp"
                     android:layout_weight="0"
+                    android:background="@drawable/attrs_background"
                     android:orientation="vertical" />
             </LinearLayout>
 
