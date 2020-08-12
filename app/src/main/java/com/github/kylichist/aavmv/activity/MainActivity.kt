@@ -142,7 +142,7 @@ class MainActivity : AppCompatActivity() {
             movementMethod = LinkMovementMethod.getInstance()
         }
     }
-    
+
     private fun checkAndGetName(
         id: String,
         userToken: String,
@@ -150,8 +150,8 @@ class MainActivity : AppCompatActivity() {
         onSuccess: (response: Any?) -> Unit = {}
     ) = GlobalScope.launch(Main) {
         when (val name = withContext(IO) { getName(id, userToken) }) {
-            is Fail -> onFail()
-            is Successful<*> -> onSuccess(name.response)
+            is Failure -> onFail()
+            is Success<*> -> onSuccess(name.response)
         }
     }
 

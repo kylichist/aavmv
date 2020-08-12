@@ -9,7 +9,7 @@ fun getName(id: String, userToken: String): Response =
                 getJSONArray("response")
                     .getJSONObject(0)
             ) {
-                return Successful("${getString("first_name")} ${getString("last_name")}")
+                return Success("${getString("first_name")} ${getString("last_name")}")
             }
-        else return Fail
+        else return Failure
     }
