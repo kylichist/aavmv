@@ -1,32 +1,19 @@
 package com.github.kylichist.aavmv.util
 
 import android.content.Context
-import android.content.res.Resources
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.util.Patterns
-import android.util.TypedValue
 import android.view.View
 import android.widget.Button
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
-import androidx.cardview.widget.CardView
 import com.github.kylichist.aavmv.R
 import org.json.JSONObject
 import java.net.HttpURLConnection
 import java.net.URL
 import java.net.URLConnection
-
-fun toDP(px: Float) =
-    TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, px, Resources.getSystem().displayMetrics)
-
-fun CardView.bind() {
-    this.apply {
-        radius = toDP(15f)
-        cardElevation = 5f
-    }
-}
 
 fun textOrGone(textView: TextView, text: String) {
     if (text.isNotBlank()) textView.text = text

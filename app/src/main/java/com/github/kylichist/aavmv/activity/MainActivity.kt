@@ -97,8 +97,6 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
-        val addTokenCard: CardView = findViewById(R.id.state_input_card_add_token)
-        addTokenCard.bind()
         val tokenDescriptionTextView: TextView = findViewById(R.id.state_input_token_description)
         val tokenDescriptionText = getText(R.string.token_description) as SpannedString
         val tokenDescriptionSpannable = SpannableString(tokenDescriptionText)
