@@ -11,7 +11,6 @@ import android.text.style.ForegroundColorSpan
 import android.view.View
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
-import androidx.cardview.widget.CardView
 import androidx.core.content.ContextCompat
 import androidx.security.crypto.EncryptedSharedPreferences
 import androidx.security.crypto.MasterKey
@@ -35,8 +34,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        val appbar: AppBarLayout = findViewById(R.id.appbar)
-        appbar.apply {
+        findViewById<AppBarLayout>(R.id.appbar).apply {
             elevation = 0f
             outlineProvider = null
         }
@@ -50,7 +48,9 @@ class MainActivity : AppCompatActivity() {
             EncryptedSharedPreferences.PrefKeyEncryptionScheme.AES256_SIV,
             EncryptedSharedPreferences.PrefValueEncryptionScheme.AES256_GCM
         )
+
         val stateSwitcher: ViewAnimator = findViewById(R.id.state_switcher)
+
         with(sharedPreferences) {
             val id = getString("id", "")!!
             val userToken = getString("token", "no")!!
@@ -68,9 +68,8 @@ class MainActivity : AppCompatActivity() {
         tokenTextView = findViewById(R.id.state_show_token)
 
         val tokenEditText: EditText = findViewById(R.id.state_input_token_url)
-        val tokenConfirm: Button = findViewById(R.id.state_input_confirm)
 
-        tokenConfirm.setOnClickListener {
+        findViewById<Button>(R.id.state_input_confirm).setOnClickListener {
             with(tokenEditText.text.toString()) {
                 if (isValid() &&
                     contains("https://oauth.vk.com/blank.html#access_token=")
@@ -97,7 +96,6 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
-        val tokenDescriptionTextView: TextView = findViewById(R.id.state_input_token_description)
         val tokenDescriptionText = getText(R.string.token_description) as SpannedString
         val tokenDescriptionSpannable = SpannableString(tokenDescriptionText)
         val annotations = tokenDescriptionText.getSpans(
@@ -139,14 +137,12 @@ class MainActivity : AppCompatActivity() {
                     }
                 }
             }
-        tokenDescriptionTextView.apply {
+        findViewById<TextView>(R.id.state_input_token_description).apply {
             text = tokenDescriptionSpannable
             movementMethod = LinkMovementMethod.getInstance()
         }
     }
-
-
-
+    
     private fun checkAndGetName(
         id: String,
         userToken: String,
