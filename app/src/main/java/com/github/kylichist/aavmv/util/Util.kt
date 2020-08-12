@@ -29,27 +29,23 @@ fun showDialog(
         R.layout.dialog,
         null
     ) as LinearLayout
-    val defaultTextView: TextView = dialogLayout.findViewById(R.id.dialog_text)
-    val optTextView: TextView = dialogLayout.findViewById(R.id.dialog_text_also)
-    textOrGone(defaultTextView, text)
-    textOrGone(optTextView, also)
-
-    val button: Button = dialogLayout.findViewById(R.id.dialog_confirm)
+    textOrGone(dialogLayout.findViewById(R.id.dialog_text), text)
+    textOrGone(dialogLayout.findViewById(R.id.dialog_text_also), also)
     val dialog = AlertDialog.Builder(context)
         .setView(dialogLayout)
         .setCancelable(false)
         .create()
-    button.setOnClickListener {
+        .apply {
+            window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+            show()
+        }
+    dialogLayout.findViewById<Button>(R.id.dialog_confirm).setOnClickListener {
         dialog.cancel()
         onCancel()
     }
-    dialog.apply {
-        window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
-        show()
-    }
 }
 
-fun get(url: String): JSONObject = URL(url)
+fun get(url: String): JSONObject = url.toURL()
     .openConnection()
     .asHttpURLConnection()
     .inputStream
@@ -57,6 +53,7 @@ fun get(url: String): JSONObject = URL(url)
     .readText()
     .toJSONObject()
 
+fun String.toURL() = URL(this)
 fun URLConnection.asHttpURLConnection() = this as HttpURLConnection
 fun String.toJSONObject() = JSONObject(this)
 
